@@ -89,42 +89,44 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Form(
-          key: _loginFormKey,
-          child: Padding(
-              padding: const EdgeInsets.all(32),
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text("Login",
-                        style: Theme.of(context).textTheme.titleLarge,
-                        textAlign: TextAlign.center),
-                    Text(
-                      "Log into your VRChat account.",
-                      style: Theme.of(context).textTheme.bodyLarge,
-                      textAlign: TextAlign.center,
-                    ),
-                    Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8),
-                        child: TextFormField(
-                          controller: usernameController,
-                          decoration: const InputDecoration(
-                              label: Text("Username / Email"),
-                              prefixIcon: Icon(Icons.account_circle_rounded)),
-                          enabled: !_isLoading,
-                          validator: (value) {
-                            if (_inputErrorMessage != null) {
-                              return _inputErrorMessage;
-                            } else if (value == null || value.isEmpty) {
-                              return "Please enter a Username or Email Address.";
-                            }
+        body: Form(
+            key: _loginFormKey,
+            child: Padding(
+                padding: const EdgeInsets.all(32),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text("Login",
+                          style: Theme.of(context).textTheme.titleLarge,
+                          textAlign: TextAlign.center),
+                      Text(
+                        "Log into your VRChat account.",
+                        style: Theme.of(context).textTheme.bodyLarge,
+                        textAlign: TextAlign.center,
+                      ),
+                      Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: TextFormField(
+                            controller: usernameController,
+                            decoration: const InputDecoration(
+                                label: Text("Username / Email"),
+                                prefixIcon: Icon(Icons.account_circle_rounded)),
+                            enabled: !_isLoading,
+                            validator: (value) {
+                              if (_inputErrorMessage != null) {
+                                return _inputErrorMessage;
+                              } else if (value == null || value.isEmpty) {
+                                return "Please enter a Username or Email Address.";
+                              }
 
-                            return null;
-                          },
-                        )),
-                    Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8),
-                        child: TextFormField(
+                              return null;
+                            },
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                          )),
+                      Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: TextFormField(
                             controller: passwordController,
                             obscureText: _isPasswordObscured,
                             decoration: InputDecoration(
@@ -150,44 +152,45 @@ class _LoginViewState extends State<LoginView> {
                               }
 
                               return null;
-                            })),
-                    Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8),
-                        child: GestureDetector(
-                            child: Row(children: [
-                              Checkbox(
-                                value: _shouldSaveCredentials,
-                                onChanged: (value) {
-                                  setState(() {
-                                    _shouldSaveCredentials = value;
-                                  });
-                                },
-                              ),
-                              Text("Save Credentials",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .labelLarge
-                                      ?.apply(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onSurfaceVariant))
-                            ]),
-                            onTap: () {})),
-                    Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            TextButton(
-                              onPressed: _isLoading ? null : register,
-                              child: const Text("Create Account"),
-                            ),
-                            FilledButton(
-                                onPressed: _isLoading ? null : login,
-                                child: const Text("Login"))
-                          ],
-                        ))
-                  ]))),
-    );
+                            },
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                          )),
+                      Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: GestureDetector(
+                              child: Row(children: [
+                                Checkbox(
+                                  value: _shouldSaveCredentials,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _shouldSaveCredentials = value;
+                                    });
+                                  },
+                                ),
+                                Text("Save Credentials",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelLarge
+                                        ?.apply(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onSurfaceVariant))
+                              ]),
+                              onTap: () {})),
+                      Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                TextButton(
+                                  onPressed: _isLoading ? null : register,
+                                  child: const Text("Create Account"),
+                                ),
+                                FilledButton(
+                                    onPressed: _isLoading ? null : login,
+                                    child: const Text("Login"))
+                              ]))
+                    ]))));
   }
 }

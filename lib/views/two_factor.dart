@@ -41,39 +41,41 @@ class _TwoFactorViewState extends State<TwoFactorView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Form(
-          key: _twoFactorFormKey,
-          child: Padding(
-            padding: const EdgeInsets.all(32),
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text("Two Factor Authorization",
-                      style: Theme.of(context).textTheme.titleLarge,
-                      textAlign: TextAlign.center),
-                  Text(
-                    "Enter a numeric code from your authenticator app.",
-                    style: Theme.of(context).textTheme.bodyLarge,
-                    textAlign: TextAlign.center,
-                  ),
-                  Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 32),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          OtpInput(controller: _fieldOne, autoFocus: true),
-                          OtpInput(controller: _fieldTwo, autoFocus: false),
-                          OtpInput(controller: _fieldThree, autoFocus: false),
-                          OtpInput(controller: _fieldFour, autoFocus: false),
-                          OtpInput(controller: _fieldFive, autoFocus: false),
-                          OtpInput(
-                              controller: _fieldSix,
-                              autoFocus: false,
-                              submitCallback: verify),
-                        ],
-                      ))
-                ]),
-          )),
-    );
+        body: Form(
+            key: _twoFactorFormKey,
+            child: Padding(
+                padding: const EdgeInsets.all(32),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text("Two Factor Authorization",
+                          style: Theme.of(context).textTheme.titleLarge,
+                          textAlign: TextAlign.center),
+                      Text(
+                        "Enter a numeric code from your authenticator app.",
+                        style: Theme.of(context).textTheme.bodyLarge,
+                        textAlign: TextAlign.center,
+                      ),
+                      Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 32),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                OtpInput(
+                                    controller: _fieldOne, autoFocus: true),
+                                OtpInput(
+                                    controller: _fieldTwo, autoFocus: false),
+                                OtpInput(
+                                    controller: _fieldThree, autoFocus: false),
+                                OtpInput(
+                                    controller: _fieldFour, autoFocus: false),
+                                OtpInput(
+                                    controller: _fieldFive, autoFocus: false),
+                                OtpInput(
+                                    controller: _fieldSix,
+                                    autoFocus: false,
+                                    submitCallback: verify),
+                              ]))
+                    ]))));
   }
 }

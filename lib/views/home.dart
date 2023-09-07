@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:vrchat_dart/vrchat_dart.dart';
+import 'package:vrctools/views/settings.dart';
 import 'package:vrctools/views/user.dart';
 
 class HomeView extends StatefulWidget {
@@ -23,10 +24,8 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("VRCTools"),
-          actions: [
-            FutureBuilder<CachedNetworkImageProvider>(
+        appBar: AppBar(title: const Text("VRCTools"), actions: [
+          FutureBuilder<CachedNetworkImageProvider>(
               future: getImage(
                   widget.api.auth.currentUser!.currentAvatarThumbnailImageUrl),
               builder: (context, snapshot) {
@@ -46,10 +45,8 @@ class _HomeViewState extends State<HomeView> {
                       padding: EdgeInsets.all(8),
                       child: CircleAvatar(child: Icon(Icons.person)));
                 }
-              },
-            )
-          ],
-        ),
+              })
+        ]),
         bottomNavigationBar: MediaQuery.of(context).size.width < 640
             ? NavigationBar(
                 selectedIndex: _selectedIndex,
@@ -69,51 +66,51 @@ class _HomeViewState extends State<HomeView> {
                 ],
               )
             : null,
-        body: Row(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            if (MediaQuery.of(context).size.width >= 640)
-              NavigationRail(
-                  selectedIndex: _selectedIndex,
-                  onDestinationSelected: (int index) {
-                    setState(() {
-                      _selectedIndex = index;
-                    });
-                  },
-                  labelType: NavigationRailLabelType.all,
-                  leading: const Column(
-                    children: [
-                      SizedBox(
-                        height: 8,
-                      ),
-                      CircleAvatar(
-                        radius: 20,
-                        child: Icon(Icons.person),
-                      ),
-                    ],
-                  ),
-                  destinations: const [
-                    NavigationRailDestination(
-                        icon: Icon(Icons.home), label: Text("Home")),
-                    NavigationRailDestination(
-                        icon: Icon(Icons.feed), label: Text("Feed")),
-                    NavigationRailDestination(
-                        icon: Icon(Icons.favorite), label: Text("Favorites")),
-                    NavigationRailDestination(
-                        icon: Icon(Icons.settings), label: Text("Settings")),
-                  ]),
-            Padding(
+        body: Row(mainAxisSize: MainAxisSize.max, children: [
+          if (MediaQuery.of(context).size.width >= 640)
+            NavigationRail(
+                selectedIndex: _selectedIndex,
+                onDestinationSelected: (int index) {
+                  setState(() {
+                    _selectedIndex = index;
+                  });
+                },
+                labelType: NavigationRailLabelType.all,
+                destinations: const [
+                  NavigationRailDestination(
+                      icon: Icon(Icons.home_rounded), label: Text("Home")),
+                  NavigationRailDestination(
+                      icon: Icon(Icons.feed_rounded), label: Text("Feed")),
+                  NavigationRailDestination(
+                      icon: Icon(Icons.star_rounded), label: Text("Favorites")),
+                  NavigationRailDestination(
+                      icon: Icon(Icons.bookmark_rounded),
+                      label: Text("Friends")),
+                  NavigationRailDestination(
+                      icon: Icon(Icons.group_rounded), label: Text("Groups")),
+                ],
+                trailing: Expanded(
+                    child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Padding(
+                            padding: const EdgeInsets.only(bottom: 16),
+                            child: IconButton(
+                              icon: const Icon(Icons.settings_rounded),
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        const SettingsView()));
+                              },
+                            ))))),
+          Padding(
               padding: const EdgeInsets.all(8),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                      "Welcome back! ${widget.api.auth.currentUser!.displayName}",
-                      style: Theme.of(context).textTheme.titleLarge),
-                ],
-              ),
-            ),
-          ],
-        ));
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                        "Welcome back! ${widget.api.auth.currentUser!.displayName}",
+                        style: Theme.of(context).textTheme.titleLarge),
+                  ]))
+        ]));
   }
 }
