@@ -23,6 +23,7 @@ class _LoginViewState extends State<LoginView> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool? _shouldSaveCredentials = false;
+  String? _inputErrorMessage;
 
   _LoginViewState() {
     SharedPreferences.getInstance().then((value) => pref = value);
@@ -31,6 +32,7 @@ class _LoginViewState extends State<LoginView> {
   void login() {
     setState(() {
       _isLoading = true;
+      _inputErrorMessage = null;
     });
 
     if (_loginFormKey.currentState!.validate()) {
@@ -39,7 +41,14 @@ class _LoginViewState extends State<LoginView> {
               username: usernameController.value.text,
               password: passwordController.value.text)
           .then((value) {
-        if (value.response?.data is CurrentUser) {
+        if (value.failure != null) {
+          _inputErrorMessage =
+              value.response!.data["error"]["message"].replaceAll("\"", "");
+          _loginFormKey.currentState!.validate();
+          setState(() {
+            _isLoading = false;
+          });
+        } else if (value.response?.data is CurrentUser) {
           pref.setStringList("saved_credentials", [
             ...(pref.getStringList("saved_credentials") ?? []),
             "${usernameController.text}:${passwordController.text}"
@@ -104,7 +113,9 @@ class _LoginViewState extends State<LoginView> {
                               prefixIcon: Icon(Icons.account_circle_rounded)),
                           enabled: !_isLoading,
                           validator: (value) {
-                            if (value == null || value.isEmpty) {
+                            if (_inputErrorMessage != null) {
+                              return _inputErrorMessage;
+                            } else if (value == null || value.isEmpty) {
                               return "Please enter a Username or Email Address.";
                             }
 
@@ -132,7 +143,9 @@ class _LoginViewState extends State<LoginView> {
                                 )),
                             enabled: !_isLoading,
                             validator: (value) {
-                              if (value == null || value.isEmpty) {
+                              if (_inputErrorMessage != null) {
+                                return _inputErrorMessage;
+                              } else if (value == null || value.isEmpty) {
                                 return "Please enter a Password.";
                               }
 
