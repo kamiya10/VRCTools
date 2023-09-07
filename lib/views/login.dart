@@ -100,7 +100,7 @@ class _LoginViewState extends State<LoginView> {
                         style: Theme.of(context).textTheme.titleLarge,
                         textAlign: TextAlign.center),
                     Text(
-                      "Login into your VRChat account.",
+                      "Log into your VRChat account.",
                       style: Theme.of(context).textTheme.bodyLarge,
                       textAlign: TextAlign.center,
                     ),
