@@ -1,7 +1,7 @@
-import 'dart:developer';
-
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:vrchat_dart/vrchat_dart.dart';
+import 'package:vrctools/views/user.dart';
 
 class HomeView extends StatefulWidget {
   final VrchatDart api;
@@ -14,9 +14,9 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   int _selectedIndex = 0;
 
-  Future<NetworkImage> getImage(String url) async {
+  Future<CachedNetworkImageProvider> getImage(String url) async {
     return widget.api.rawApi.dio.get(url).then((res) {
-      return NetworkImage(res.redirects.last.location.toString());
+      return CachedNetworkImageProvider(res.redirects.last.location.toString());
     });
   }
 
@@ -26,14 +26,25 @@ class _HomeViewState extends State<HomeView> {
         appBar: AppBar(
           title: const Text("VRCTools"),
           actions: [
-            FutureBuilder<NetworkImage>(
+            FutureBuilder<CachedNetworkImageProvider>(
               future: getImage(
                   widget.api.auth.currentUser!.currentAvatarThumbnailImageUrl),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  return CircleAvatar(backgroundImage: snapshot.data);
+                  return Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: GestureDetector(
+                        child: CircleAvatar(backgroundImage: snapshot.data),
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => UserView(
+                                  widget.api, widget.api.auth.currentUser)));
+                        },
+                      ));
                 } else {
-                  return const CircleAvatar(child: Icon(Icons.person));
+                  return const Padding(
+                      padding: EdgeInsets.all(8),
+                      child: CircleAvatar(child: Icon(Icons.person)));
                 }
               },
             )
