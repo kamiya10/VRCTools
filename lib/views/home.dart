@@ -99,7 +99,7 @@ class _HomeViewState extends State<HomeView> {
                               onPressed: () {
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) =>
-                                        const SettingsView()));
+                                        SettingsView(widget.api)));
                               },
                             ))))),
           Padding(
