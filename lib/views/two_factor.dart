@@ -5,17 +5,17 @@ import 'package:vrchat_dart/vrchat_dart.dart';
 import 'package:vrctools/views/home.dart';
 import 'package:vrctools/widgets/otp_input.dart';
 
-class TwoFactorPage extends StatefulWidget {
+class TwoFactorView extends StatefulWidget {
   final VrchatDart api;
-  const TwoFactorPage(this.api, {super.key});
+  const TwoFactorView(this.api, {super.key});
 
   @override
   State<StatefulWidget> createState() {
-    return _TwoFactorPageState();
+    return _TwoFactorViewState();
   }
 }
 
-class _TwoFactorPageState extends State<TwoFactorPage> {
+class _TwoFactorViewState extends State<TwoFactorView> {
   final _twoFactorFormKey = GlobalKey<FormState>();
   final TextEditingController _fieldOne = TextEditingController();
   final TextEditingController _fieldTwo = TextEditingController();
@@ -32,7 +32,7 @@ class _TwoFactorPageState extends State<TwoFactorPage> {
       inspect(value.response?.data);
       if (value.response?.statusCode == 200) {
         Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => HomePage(widget.api)),
+            MaterialPageRoute(builder: (context) => HomeView(widget.api)),
             (route) => false);
       }
     });

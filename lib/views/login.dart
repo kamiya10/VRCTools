@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vrchat_dart/vrchat_dart.dart';
@@ -7,17 +5,17 @@ import 'package:vrctools/views/home.dart';
 import 'package:vrctools/views/register.dart';
 import 'package:vrctools/views/two_factor.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginView extends StatefulWidget {
   final VrchatDart api;
-  const LoginPage(this.api, {super.key});
+  const LoginView(this.api, {super.key});
 
   @override
   State<StatefulWidget> createState() {
-    return _LoginPageState();
+    return _LoginViewState();
   }
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginViewState extends State<LoginView> {
   late final SharedPreferences pref;
   final _loginFormKey = GlobalKey<FormState>();
   bool _isPasswordObscured = true;
@@ -26,7 +24,7 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController passwordController = TextEditingController();
   bool? _shouldSaveCredentials = false;
 
-  _LoginPageState() {
+  _LoginViewState() {
     SharedPreferences.getInstance().then((value) => pref = value);
   }
 
@@ -41,21 +39,21 @@ class _LoginPageState extends State<LoginPage> {
               username: usernameController.value.text,
               password: passwordController.value.text)
           .then((value) {
-        if (value.response?.data.containsKey("requiresTwoFactorAuth")) {
-          pref.setStringList("saved_credentials", [
-            ...(pref.getStringList("saved_credentials") ?? []),
-            "${usernameController.text}:${passwordController.text}"
-          ]);
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => TwoFactorPage(widget.api)));
-        } else {
+        if (value.response?.data is CurrentUser) {
           pref.setStringList("saved_credentials", [
             ...(pref.getStringList("saved_credentials") ?? []),
             "${usernameController.text}:${passwordController.text}"
           ]);
           Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (context) => HomePage(widget.api)),
+              MaterialPageRoute(builder: (context) => HomeView(widget.api)),
               (route) => false);
+        } else if (value.response?.data.containsKey("requiresTwoFactorAuth")) {
+          pref.setStringList("saved_credentials", [
+            ...(pref.getStringList("saved_credentials") ?? []),
+            "${usernameController.text}:${passwordController.text}"
+          ]);
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => TwoFactorView(widget.api)));
         }
       }).catchError((error) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -76,7 +74,7 @@ class _LoginPageState extends State<LoginPage> {
 
   void register() {
     Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => RegisterPage(widget.api)));
+        MaterialPageRoute(builder: (context) => RegisterView(widget.api)));
   }
 
   @override

@@ -26,8 +26,8 @@ class VRCTools extends StatelessWidget {
       ),
       initialRoute: api.auth.currentUser == null ? "login" : "/",
       routes: {
-        "/": (context) => HomePage(api),
-        "login": (context) => LoginPage(api),
+        "/": (context) => HomeView(api),
+        "login": (context) => LoginView(api),
       },
     );
   }

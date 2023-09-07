@@ -3,28 +3,28 @@ import 'package:vrchat_dart/vrchat_dart.dart';
 import 'package:vrctools/views/home.dart';
 import 'package:vrctools/views/login.dart';
 
-class RegisterPage extends StatefulWidget {
+class RegisterView extends StatefulWidget {
   final VrchatDart api;
-  const RegisterPage(this.api, {super.key});
+  const RegisterView(this.api, {super.key});
 
   @override
   State<StatefulWidget> createState() {
-    return _RegisterPageState();
+    return _RegisterViewState();
   }
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _RegisterViewState extends State<RegisterView> {
   bool _isPasswordObscured = true;
   bool _isConfirmPasswordObscured = true;
 
   void login() {
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => LoginPage(widget.api)));
+        .push(MaterialPageRoute(builder: (context) => LoginView(widget.api)));
   }
 
   void register() {
     Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => HomePage(widget.api)),
+        MaterialPageRoute(builder: (context) => HomeView(widget.api)),
         (route) => false);
   }
 
