@@ -36,6 +36,14 @@ class _RegisterPageState extends State<RegisterPage> {
         child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              Text("Register",
+                  style: Theme.of(context).textTheme.titleLarge,
+                  textAlign: TextAlign.center),
+              Text(
+                "Register .",
+                style: Theme.of(context).textTheme.bodyLarge,
+                textAlign: TextAlign.center,
+              ),
               TextFormField(
                 decoration: const InputDecoration(label: Text("Username")),
               ),

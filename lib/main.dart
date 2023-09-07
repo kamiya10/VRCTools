@@ -19,14 +19,14 @@ class VRCTools extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'VRCTools',
+      title: "VRCTools",
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
       initialRoute: api.auth.currentUser == null ? "login" : "/",
       routes: {
-        '/': (context) => HomePage(api),
+        "/": (context) => HomePage(api),
         "login": (context) => LoginPage(api),
       },
     );

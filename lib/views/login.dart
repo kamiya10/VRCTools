@@ -89,6 +89,14 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
+                    Text("Login",
+                        style: Theme.of(context).textTheme.titleLarge,
+                        textAlign: TextAlign.center),
+                    Text(
+                      "Login into your VRChat account.",
+                      style: Theme.of(context).textTheme.bodyLarge,
+                      textAlign: TextAlign.center,
+                    ),
                     Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8),
                         child: TextFormField(
