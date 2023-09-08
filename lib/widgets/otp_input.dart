@@ -36,7 +36,7 @@ class OtpInput extends StatelessWidget {
             FocusScope.of(context).previousFocus();
           }
 
-          submitCallback!();
+          submitCallback?.call();
         },
       ),
     );

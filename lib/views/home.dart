@@ -1,6 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:vrchat_dart/vrchat_dart.dart';
+import 'package:vrctools/pages/favorites.dart';
+import 'package:vrctools/pages/feed.dart';
+import 'package:vrctools/pages/home.dart';
 import 'package:vrctools/views/settings.dart';
 import 'package:vrctools/views/user.dart';
 
@@ -102,15 +105,7 @@ class _HomeViewState extends State<HomeView> {
                                         SettingsView(widget.api)));
                               },
                             ))))),
-          Padding(
-              padding: const EdgeInsets.all(8),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                        "Welcome back! ${widget.api.auth.currentUser!.displayName}",
-                        style: Theme.of(context).textTheme.titleLarge),
-                  ]))
+          [HomePage(widget.api), FeedPage(widget.api),FavoritePage(widget.api)][_selectedIndex]
         ]));
   }
 }
